@@ -2,6 +2,7 @@ import './css/style.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Menu from './pages/Menu'
 import Login from './pages/Login'
+import Erros from './pages/Erros'
 
 const App = () => {
 
@@ -13,6 +14,10 @@ const App = () => {
     {
       path: "/menu",
       element: <Menu/>,
+    },
+    {
+      path: "*",
+      element: <Erros/>,
     },
   ]);
 
