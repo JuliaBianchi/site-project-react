@@ -3,7 +3,7 @@ import Cabecalho from "../components/Cabecalho"
 import Rodape from "../components/Rodape"
 import { useNavigate } from "react-router-dom"
 
-export default function Login() {
+export default function Login(props) {
 
     const navigate = useNavigate();
 
@@ -16,9 +16,11 @@ export default function Login() {
     const  validar = () => {
 
         if (userName === "admin" && password === "admin") {
+            props.setLogin(true)
             navigate("/menu")
         }else{
             setMsgError("Usuário e senha incorretos!")
+            props.setLogin(false)
         }
         
     }

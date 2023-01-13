@@ -1,41 +1,51 @@
-import React, {useState, useLayoutEffect} from "react"
+import React, { useState, useLayoutEffect } from "react"
 import Rodape from "../components/Rodape"
 import Cabecalho from "../components/Cabecalho"
 import axios from 'axios'
+import { Link } from "react-router-dom"
 
-export default function Menu(){
+export default function Menu() {
 
     const [clientes, setClientes] = useState([])
 
     useLayoutEffect(() => {
         axios.get("https://randomuser.me/api/?results=20")
-            .then((retorno) => setClientes(retorno.data.results))
+            .then((retorno) => {
+                setClientes(retorno.data.results)
+                console.log(retorno.data.results)
+            })
             .catch((error) => console.log(error))
-
-        console.log("Estamos no layoutEffect")
     }, [])
 
 
 
-    return(
+    return (
         <>
-        <Cabecalho iconLogin={false}/>
-        <div>
+            <Cabecalho iconLogin={false} />
+            <div>
+                <h1>Lista dos Clientes</h1>
+                <table>
+                    {
+                        clientes.map((item, key) =>
 
-            <h1>Lista dos Clientes</h1>
-            {
-            
-            clientes.map((item, key) => 
-            <div key={key}> {key} {item.name.title}. {item.name.first} - {item.email}</div>)
-            
-            }
+                            <tr key={key}>
+                                <td style={{ width: "10%" }}> < img src={item.picture.large} style={{ maxWidth: 80, borderRadius: 50 }} /></td>
+                                <td style={{ width: "10%", textAlign: "right" }}>{item.name.title}.</td>
+                                <td style={{ width: "20%" }}>{item.name.first} {item.name.last}</td>
+                                <td style={{ width: "20%" }}>e-mail:{item.email}</td>
+                                <td style={{ width: "20%" }}><Link to={"/details"} state={item}>Visualizar</Link></td>
+                            </tr>
 
-        </div>
+                        )
+                    }
+                </table>
 
-        <Rodape/>
+            </div>
+
+            <Rodape />
 
 
         </>
-        
+
     )
 }
